@@ -1,3 +1,34 @@
+# Personal Notes
+
+EJECUCIÓN
+Abrir terminal (cmd) e ir a la dirección donde están los archivos de fortran a ejecutar. Para ejecutar el 'g77' quizás haga falta sourcear el compilador en el PATH de windows y, por supuesto, haber instalado el compilador g77 antes.
+
+Hacer: 
+```bash
+g77 temain_mod.f teprob.f
+```
+o bien
+```bash
+g77 temain.f teprob.f (para el Open Loop)
+```
+
+Ejecutar el output
+```bash
+a.exe
+```
+
+Si uno intenta compilar el temain_mod.f como dice la web, compilará bien, pero dará un error al arrancar el ejecutable.
+
+Esto se debe SOLO a las UNITS utilizadas en input/output, que al menos para el compilador g77 no pueden ser mayores de 100. Estas UNITS están:
+- Línea 347
+- Uno solo suelto en la línea 406
+- Línea 418
+- Línea 1346
+
+Además, los nombres de los archivos están escritos en forma `~/TE_data_inc.dat`. Esto no le mola mucho al g77 en la terminal de windows, así que borrar todos los `~/`
+
+Además, puede que uno quiera cambiar los 'old' por 'new' para que se sobreescriban los archivos generados (es lo mejor, quizás haga falta borrar los archivos cada vez, eso sí).
+
 # Table of Contents
 
 1. [Author](#author)
