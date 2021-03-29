@@ -1,33 +1,34 @@
 # Personal Notes
 
-EJECUCIÓN
-Abrir terminal (cmd) e ir a la dirección donde están los archivos de fortran a ejecutar. Para ejecutar el 'g77' quizás haga falta sourcear el compilador en el PATH de windows y, por supuesto, haber instalado el compilador g77 antes.
+EXECUTION
+Open the terminal (cmd) and go to the address where the fortran files to be executed are located. To run 'g77' you may need to source the compiler in the windows PATH and, of course, to have installed the g77 compiler before.
 
-Hacer: 
+Perform the command:
 ```bash
 g77 temain_mod.f teprob.f
 ```
-o bien
+or for the open-loop unstable simulation:
 ```bash
 g77 temain.f teprob.f (para el Open Loop)
 ```
 
-Ejecutar el output
+And execute the program compiled:
 ```bash
 a.exe
 ```
 
-Si uno intenta compilar el temain_mod.f como dice la web, compilará bien, pero dará un error al arrancar el ejecutable.
+If one tries to compile the temain_mod.f following these instructions, it will compile fine, but will give an error when starting the executable.
 
-Esto se debe SOLO a las UNITS utilizadas en input/output, que al menos para el compilador g77 no pueden ser mayores de 100. Estas UNITS están:
-- Línea 347
-- Uno solo suelto en la línea 406
-- Línea 418
-- Línea 1346
+This is ONLY due to the UNITS used in input/output statements, which at least for the g77 compiler can't be greater than 100:
+- Line 347
+- One single one in line 406
+- Line 418
+- Line 1346
 
-Además, los nombres de los archivos están escritos en forma `~/TE_data_inc.dat`. Esto no le mola mucho al g77 en la terminal de windows, así que borrar todos los `~/`
+Also, the file names are written in the form `~/TE_data_inc.dat`. This is not very nice for g77 in the windows terminal, so delete all the `~/`.
 
-Además, puede que uno quiera cambiar los 'old' por 'new' para que se sobreescriban los archivos generados (es lo mejor, quizás haga falta borrar los archivos cada vez, eso sí).
+Also, you may want to change the 'old' to 'new' so that the generated files are overwritten (it's best, you may have to delete the files each time, though).
+
 
 # Table of Contents
 
