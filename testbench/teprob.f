@@ -700,6 +700,12 @@ C
       XMEAS(20)=CPDH*0.29307D3
       XMEAS(21)=TWR
       XMEAS(22)=TWS
+      PRINT *, 'lb-mol of A in REACTOR (liquid) = ', UCLR(1)
+      PRINT *, 'lb-mol of A in REACTOR (vapor) = ', UCVR(1)
+      PRINT *, 'lb-mol of A in SEPARATOR (liquid) = ', UCLS(1)
+      PRINT *, 'lb-mol of A in SEPARATOR (vapor) = ', UCVS(1)
+      PRINT *, 'lb-mol of A in HEADER (vapor) = ', UCVV(1)
+      PRINT *, 'lb-mol of A in STRIPPER (liquid) = ', UCLC(1)
       ISD=0
       IF(XMEAS(7).GT.3000.0)ISD=1
       IF(VLR/35.3145.GT.24.0)ISD=1
