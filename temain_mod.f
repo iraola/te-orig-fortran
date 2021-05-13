@@ -12,9 +12,9 @@ C                          Kingsport, Tennessee 37662
 C
 C--------------------------------------------------------------------
 C
-C  New version is a closed-loop plant-wide control scheme for 
+C  New version is a closed-loop plant-wide control scheme for
 C  the Tennessee Eastman Process Control Test Problem
-C				
+C
 C  The modifications are by:
 C
 C	      Evan L. Russell, Leo H. Chiang and Richard D. Braatz
@@ -26,69 +26,69 @@ C	                 600 South Mathews Avenue, Box C-3
 C			      Urbana, Illinois 61801
 C		 	    http://brahms.scs.uiuc.edu
 C
-C The modified text is Copyright 1998-2002 by The Board of Trustees 
+C The modified text is Copyright 1998-2002 by The Board of Trustees
 C of the University of Illinois.  All rights reserved.
-C 
+C
 C Permission hereby granted, free of charge, to any person obtaining a copy
 C of this software and associated documentation files (the "Software"), to
 C deal with the Software without restriction, including without limitation
 C the rights to use, copy, modify, merge, publish, distribute, sublicense,
-C and/or sell copies of the Software, and to permit persons to whom the 
+C and/or sell copies of the Software, and to permit persons to whom the
 C Software is furnished to do so, subject to the following conditions:
 C 		1. Redistributions of source code must retain the above copyright
 C		   notice, this list of conditions and the following disclaimers.
-C		2. Redistributions in binary form must reproduce the above 
-C		   copyright notice, this list of conditions and the following 
-C		   disclaimers in the documentation and/or other materials 
+C		2. Redistributions in binary form must reproduce the above
+C		   copyright notice, this list of conditions and the following
+C		   disclaimers in the documentation and/or other materials
 C		   provided with the distribution.
 C		3. Neither the names of Large Scale Research Systems Laboratory,
 C		   University of Illinois, nor the names of its contributors may
-C		   be used to endorse or promote products derived from this 
+C		   be used to endorse or promote products derived from this
 C		   Software without specific prior written permission.
 C
 C THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 C OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-C FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+C FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
 C THE CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-C OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
+C OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 C ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 C DEALINGS IN THE SOFTWARE.
 C----------------------------------------------------------------------
 C
 C  Users should cite the original code using the following references:
 C
-C    J.J. Downs and E.F. Vogel, "A plant-wide industrial process control 
+C    J.J. Downs and E.F. Vogel, "A plant-wide industrial process control
 C    problem." Presented at the AIChE 1990 Annual Meeting, Session on
 C    Industrial Challenge Problems in Process Control, Paper #24a
 C    Chicago, Illinois, November 14, 1990.
 C
-C    J.J. Downs and E.F. Vogel, "A plant-wide industrial process control 
+C    J.J. Downs and E.F. Vogel, "A plant-wide industrial process control
 C    problem," Computers and Chemical Engineering, 17:245-255 (1993).
-C  
+C
 C  Users should cite the modified code using the following references:
 C
-C    E.L. Russell, L.H. Chiang, and R.D. Braatz. Data-driven Techniques 
-C    for Fault Detection and Diagnosis in Chemical Processes, Springer-Verlag, 
-C    London, 2000. 
+C    E.L. Russell, L.H. Chiang, and R.D. Braatz. Data-driven Techniques
+C    for Fault Detection and Diagnosis in Chemical Processes, Springer-Verlag,
+C    London, 2000.
 C
-C    L.H. Chiang, E.L. Russell, and R.D. Braatz. Fault Detection and 
-C    Diagnosis in Industrial Systems, Springer-Verlag, London, 2001.  
+C    L.H. Chiang, E.L. Russell, and R.D. Braatz. Fault Detection and
+C    Diagnosis in Industrial Systems, Springer-Verlag, London, 2001.
 C
-C    L.H. Chiang, E.L. Russell, and R.D. Braatz. "Fault diagnosis in 
-C    chemical processes using Fisher discriminant analysis, discriminant 
-C    partial least squares, and principal component analysis," Chemometrics 
-C    and Intelligent Laboratory Systems, 50:243-252, 2000. 
+C    L.H. Chiang, E.L. Russell, and R.D. Braatz. "Fault diagnosis in
+C    chemical processes using Fisher discriminant analysis, discriminant
+C    partial least squares, and principal component analysis," Chemometrics
+C    and Intelligent Laboratory Systems, 50:243-252, 2000.
 C
-C    E.L. Russell, L.H. Chiang, and R.D. Braatz. "Fault detection in 
-C    industrial processes using canonical variate analysis and dynamic 
-C    principal component analysis," Chemometrics and Intelligent Laboratory 
-C    Systems, 51:81-93, 2000. 
+C    E.L. Russell, L.H. Chiang, and R.D. Braatz. "Fault detection in
+C    industrial processes using canonical variate analysis and dynamic
+C    principal component analysis," Chemometrics and Intelligent Laboratory
+C    Systems, 51:81-93, 2000.
 C
 C
 C  Main program for demonstrating application of the modified Tennessee Eastman
 C  Process Control Test Problem
 C
-C  
+C
 C  Instructions for running the program
 C  ====================================
 C
@@ -103,16 +103,16 @@ C     implement disturbance 2, type IDV(2)=1 .
 C
 C  4) The program will generate 15 output files and all data are recorded every
 C     180 seconds, see Table 1 for details.  The default path is the home directory.
-C     To change the file name and path, modify lines 346-360 accordingly.  
-C     To overwrite the files that already existed, change STATUS='new' to 
+C     To change the file name and path, modify lines 346-360 accordingly.
+C     To overwrite the files that already existed, change STATUS='new' to
 C     STATUS='old' from lines 346-360.
-C 	     
+C
 C
 C    		 Table 1: Content of the output files
 C
 C      File Name		        	Content
 C      ---------			        -------
-C    TE_data_inc.dat	   		  Time (in seconds) 
+C    TE_data_inc.dat	   		  Time (in seconds)
 C    TE_data_mv1.dat	   Measurements for manipulated variables 1 to 4
 C    TE_data_mv2.dat	   Measurements for manipulated variables 5 to 8
 C    TE_data_mv3.dat	   Measurements for manipulated variables 9 to 12
@@ -126,7 +126,7 @@ C    TE_data_me07.dat	   Measurements for measurement variables 25 to 28
 C    TE_data_me08.dat	   Measurements for measurement variables 29 to 32
 C    TE_data_me09.dat	   Measurements for measurement variables 33 to 36
 C    TE_data_me10.dat	   Measurements for measurement variables 37 to 40
-C    TE_data_me11.dat	   Measurements for measurement variable 41 
+C    TE_data_me11.dat	   Measurements for measurement variable 41
 C
 C  5) To ensure the randomness of the measurement noises, the random number
 C     G in the sub program (teprob.f, line 1187) has to be changed each time before
@@ -136,7 +136,7 @@ C  6) Save the changes in 'temain_mod.f' and 'teprob.f' and compile the program 
 C      unix by typing
 C      f77 temain_mod.f teprob.f
 C
-C  7) Run the program by typing 
+C  7) Run the program by typing
 C      a.out
 C
 C
@@ -243,7 +243,7 @@ CC      SETPT = XMEAS(15) + 15.0
 CC      GAIN = 2.0
 CC      TAUI = 5.0
 CC      ERROLD = 0.0
-      SETPT(1)=3664.0        
+      SETPT(1)=3664.0
       GAIN1=1.0
       ERROLD1=0.0
       SETPT(2)=4509.3
@@ -256,40 +256,40 @@ CC      ERROLD = 0.0
       GAIN4=1.
       ERROLD4=0.0
       SETPT(5)=26.902
-      GAIN5=-0.083 	   
-      TAUI5=1./3600.   
+      GAIN5=-0.083
+      TAUI5=1./3600.
       ERROLD5=0.0
-      SETPT(6)=0.33712  
-      GAIN6=1.22        	       
+      SETPT(6)=0.33712
+      GAIN6=1.22
       ERROLD6=0.0
       SETPT(7)=50.0
-      GAIN7=-2.06      
+      GAIN7=-2.06
       ERROLD7=0.0
       SETPT(8)=50.0
-      GAIN8=-1.62      
+      GAIN8=-1.62
       ERROLD8=0.0
       SETPT(9)=230.31
-      GAIN9=0.41          
-      ERROLD9=0.0	
+      GAIN9=0.41
+      ERROLD9=0.0
       SETPT(10)=94.599
       GAIN10= -0.156     * 10.
-      TAUI10=1452./3600. 
+      TAUI10=1452./3600.
       ERROLD10=0.0
-      SETPT(11)=22.949    
-      GAIN11=1.09	  
+      SETPT(11)=22.949
+      GAIN11=1.09
       TAUI11=2600./3600.
       ERROLD11=0.0
       SETPT(13)=32.188
-      GAIN13=18.              
-      TAUI13=3168./3600.   
+      GAIN13=18.
+      TAUI13=3168./3600.
       ERROLD13=0.0
       SETPT(14)=6.8820
-      GAIN14=8.3	  
+      GAIN14=8.3
       TAUI14=3168.0/3600.
       ERROLD14=0.0
-      SETPT(15)=18.776 	  		
-      GAIN15=2.37	  	
-      TAUI15=5069./3600.    
+      SETPT(15)=18.776
+      GAIN15=2.37
+      TAUI15=5069./3600.
       ERROLD15=0.0
       SETPT(16)=65.731
       GAIN16=1.69	  / 10.
@@ -297,23 +297,23 @@ CC      ERROLD = 0.0
       ERROLD16=0.0
       SETPT(17)=75.000
       GAIN17=11.1	/ 10.
-      TAUI17=3168./3600.  
-      ERROLD17=0.0	  
+      TAUI17=3168./3600.
+      ERROLD17=0.0
       SETPT(18)=120.40
       GAIN18=2.83	* 10.
       TAUI18=982./3600.
       ERROLD18=0.0
       SETPT(19)=13.823
-      GAIN19=-83.2	  / 5. /3.  
-      TAUI19=6336./3600. 
+      GAIN19=-83.2	  / 5. /3.
+      TAUI19=6336./3600.
       ERROLD19=0.0
-      SETPT(20)=0.83570  
-      GAIN20=-16.3	 / 5.	   
-      TAUI20=12408./3600.  
+      SETPT(20)=0.83570
+      GAIN20=-16.3	 / 5.
+      TAUI20=12408./3600.
       ERROLD20=0.0
       SETPT(12)=2633.7
-      GAIN22=-1.0	  * 5.	   
-      TAUI22=1000./3600.  
+      GAIN22=-1.0	  * 5.
+      TAUI22=1000./3600.
       ERROLD22=0.0
 C
 C    Example Disturbance:
@@ -321,7 +321,7 @@ C    Change Reactor Cooling
 C
  	XMV(1) = 63.053 + 0.
 	XMV(2) = 53.980 + 0.
-	XMV(3) = 24.644 + 0.    
+	XMV(3) = 24.644 + 0.
 	XMV(4) = 61.302 + 0.
 	XMV(5) = 22.210 + 0.
 	XMV(6) = 40.064 + 0.
@@ -338,7 +338,7 @@ C
       DO 100 I = 1, 20
           IDV(I) = 0
  100  CONTINUE
-C      IDV(20)=1	
+C      IDV(20)=1
 C
 C
 C
@@ -394,13 +394,13 @@ C
 	  ENDIF
 	  TEST1=MOD(I,900)
 	  IF (TEST1.EQ.0) CALL CONTRL20
-	  TEST3=MOD(I,5000)       
+	  TEST3=MOD(I,5000)
 	  IF (TEST3.EQ.0) THEN
 		PRINT *, 'Simulation time (in seconds) = ', I
-	
+
 	ENDIF
 C
- 	TEST4=MOD(I,180)	
+ 	TEST4=MOD(I,180)
 	IF (TEST4.EQ.0) THEN
 		CALL OUTPUT
       		WRITE(32,111) I
@@ -541,7 +541,7 @@ C    Stripper Level Controller
 C
 C    Calculate Error
 C
-      ERR2 = (SETPT(2) - XMEAS(3)) * 100. / 8354. 
+      ERR2 = (SETPT(2) - XMEAS(3)) * 100. / 8354.
 C
 C    Proportional-Integral Controller (Velocity Form)
 C         GAIN = Controller Gain
@@ -673,7 +673,7 @@ C
 C 	PRINT *, 'GAIN5= ', GAIN5
 C	PRINT *, 'TAUI5= ', TAUI5
 C	PRINT *, 'ERR5= ', ERR5
-C	PRINT *, 'ERROLD5= ', ERROLD5     
+C	PRINT *, 'ERROLD5= ', ERROLD5
 C
 	DXMV = GAIN5 * ((ERR5 - ERROLD5)+ERR5*DELTAT*3./TAUI5)
 C
@@ -729,7 +729,7 @@ C     Stripper Level Controller
 		SETPT(6)=0.33712
 		ERROLD6=0.0
 		FLAG=0
-	ELSE	
+	ELSE
 		FLAG=0
 C
 C    Calculate Error
@@ -744,11 +744,11 @@ C	PRINT *, 'XMV(6)= ', XMV(6)
       DXMV = GAIN6 * ( ( ERR6 - ERROLD6 ) )
 C
 C 	PRINT *, 'GAIN6= ', GAIN6
-C	PRINT *, 'SETPT(6)= ', SETPT(6)	
-C	PRINT *, 'XMEAS(10)= ', XMEAS(10)     
+C	PRINT *, 'SETPT(6)= ', SETPT(6)
+C	PRINT *, 'XMEAS(10)= ', XMEAS(10)
 	XMV(6) = XMV(6) + DXMV
 C
-C 	PRINT *, 'ERROLD6= ', ERROLD6     
+C 	PRINT *, 'ERROLD6= ', ERROLD6
 C	PRINT *, 'ERR6= ', ERR6
 C	PRINT *, 'XMV(6)== ', XMV(6)
       ERROLD6 = ERR6
@@ -865,7 +865,7 @@ C    Stripper Level Controller
 C
 C    Calculate Error
 C
-      ERR9 = (SETPT(9) - XMEAS(19)) * 100. / 460. 
+      ERR9 = (SETPT(9) - XMEAS(19)) * 100. / 460.
 C
 C    Proportional-Integral Controller (Velocity Form)
 C         GAIN = Controller Gain
@@ -1193,7 +1193,7 @@ C    Stripper Level Controller
 C
 C    Calculate Error
 C
-      ERR18 = (SETPT(18) - XMEAS(9)) * 100. / 150. 
+      ERR18 = (SETPT(18) - XMEAS(9)) * 100. / 150.
 C
 C    Proportional-Integral Controller (Velocity Form)
 C         GAIN = Controller Gain
@@ -1269,7 +1269,7 @@ C
       COMMON/CTRLALL/ SETPT(20), DELTAT
       DOUBLE PRECISION GAIN20, TAUI20, ERROLD20
       COMMON/CTRL20/  GAIN20, TAUI20, ERROLD20
-C    
+C
       DOUBLE PRECISION ERR20, DXMV
 C
 C  Example PI Controller:
@@ -1310,7 +1310,7 @@ C
       COMMON/CTRLALL/ SETPT(20), DELTAT
       DOUBLE PRECISION GAIN22, TAUI22, ERROLD22
       COMMON/CTRL22/  GAIN22, TAUI22, ERROLD22
-C    
+C
       DOUBLE PRECISION ERR22, DXMV
 C
 C  Example PI Controller:
@@ -1343,9 +1343,9 @@ C
       DOUBLE PRECISION XMEAS, XMV
       COMMON/PV/ XMEAS(41), XMV(12)
 C
-        WRITE(32,100) XMV(1), XMV(2), XMV(3), XMV(4)
-      	WRITE(12,100) XMV(5), XMV(6), XMV(7), XMV(8)
-      	WRITE(13,100) XMV(9), XMV(10), XMV(11), XMV(12)
+        WRITE(12,100) XMV(1), XMV(2), XMV(3), XMV(4)
+      	WRITE(13,100) XMV(5), XMV(6), XMV(7), XMV(8)
+      	WRITE(14,100) XMV(9), XMV(10), XMV(11), XMV(12)
       	WRITE(21,100) XMEAS(1), XMEAS(2), XMEAS(3), XMEAS(4)
       	WRITE(22,100) XMEAS(5), XMEAS(6), XMEAS(7), XMEAS(8)
       	WRITE(23,100) XMEAS(9), XMEAS(10), XMEAS(11), XMEAS(12)
@@ -1381,7 +1381,7 @@ C
 C
       DO 100 I = 1, NN
 C
-          YY(I) = YY(I) + YP(I) * DELTAT 
+          YY(I) = YY(I) + YP(I) * DELTAT
 C
  100  CONTINUE
 C
@@ -1399,7 +1399,7 @@ C
       COMMON/PV/ XMEAS(41), XMV(12)
 C
 	INTEGER I
-C	
+C
 	DO 100 I=1, 11
 		IF (XMV(I).LE.0.0) XMV(I)=0.
  		IF (XMV(I).GE.100.0) XMV(I)=100.
@@ -1407,4 +1407,3 @@ C
 C
       RETURN
       END
-
