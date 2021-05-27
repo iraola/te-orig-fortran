@@ -28,8 +28,24 @@ C
 C
 C  MEASUREMENT AND VALVE COMMON BLOCK
 C
+      DOUBLE PRECISION G
+      COMMON/RANDSD/G
       DOUBLE PRECISION XMEAS, XMV
       COMMON/PV/ XMEAS(41), XMV(12)
+      DOUBLE PRECISION
+     .AVP,BVP,CVP,
+     .AH,BH,CH,
+     .AG,BG,CG,
+     .AV,
+     .AD,BD,CD,
+     .XMW
+      COMMON/CONST/
+     .AVP(8),BVP(8),CVP(8),
+     .AH(8),BH(8),CH(8),
+     .AG(8),BG(8),CG(8),
+     .AV(8),
+     .AD(8),BD(8),CD(8),
+     .XMW(8)
 C
 C   DISTURBANCE VECTOR COMMON BLOCK
 C
@@ -109,6 +125,11 @@ C
       OPEN(UNIT=29,FILE='TE_data_me09.dat',STATUS='old')
       OPEN(UNIT=30,FILE='TE_data_me10.dat',STATUS='old')
       OPEN(UNIT=31,FILE='TE_data_me11.dat',STATUS='old')
+      OPEN(UNIT=41,FILE='TE_openloop_g.dat',STATUS='old')
+      OPEN(UNIT=42,FILE='TE_const1.dat',STATUS='old')
+      OPEN(UNIT=43,FILE='TE_const2.dat',STATUS='old')
+C  Write timestep zero for testing purposes
+      CALL OUTPUT
 C  Simulation Loop
 C
       DO 1000 I = 1, NPTS
@@ -143,6 +164,9 @@ C
       CLOSE(UNIT=29)
       CLOSE(UNIT=30)
       CLOSE(UNIT=31)
+      CLOSE(UNIT=41)
+      CLOSE(UNIT=42)
+      CLOSE(UNIT=43)
       STOP
       END
 C
@@ -194,6 +218,22 @@ C   MEASUREMENT AND VALVE COMMON BLOCK
 C
       DOUBLE PRECISION XMEAS, XMV
       COMMON/PV/ XMEAS(41), XMV(12)
+      DOUBLE PRECISION G
+      COMMON/RANDSD/G
+      DOUBLE PRECISION
+     .AVP,BVP,CVP,
+     .AH,BH,CH,
+     .AG,BG,CG,
+     .AV,
+     .AD,BD,CD,
+     .XMW
+      COMMON/CONST/
+     .AVP(8),BVP(8),CVP(8),
+     .AH(8),BH(8),CH(8),
+     .AG(8),BG(8),CG(8),
+     .AV(8),
+     .AD(8),BD(8),CD(8),
+     .XMW(8)
 C
       WRITE(12,100) XMV(1), XMV(2), XMV(3), XMV(4)
     	WRITE(13,100) XMV(5), XMV(6), XMV(7), XMV(8)
@@ -209,9 +249,13 @@ C
     	WRITE(29,100) XMEAS(33), XMEAS(34), XMEAS(35), XMEAS(36)
     	WRITE(30,100) XMEAS(37), XMEAS(38), XMEAS(39), XMEAS(40)
     	WRITE(31,300) XMEAS(41)
- 100  FORMAT(1X,E13.5,2X,E13.5,2X,E13.5,2X,E13.5)
- 200  FORMAT(1X,E13.5,2X,E13.5,2X,E13.5)
- 300  FORMAT(1X,E13.5)
+C
+      WRITE(41,300) G
+      WRITE(42,100) AVP(1), AVP(2), AVP(3), AVP(4)
+      WRITE(43,100) AVP(5), AVP(6), AVP(7), AVP(8)
+ 100  FORMAT(1X,E13.8,2X,E13.8,2X,E13.8,2X,E13.8)
+ 200  FORMAT(1X,E13.8,2X,E13.8,2X,E13.8)
+ 300  FORMAT(1X,E13.8)
 C
       RETURN
       END
