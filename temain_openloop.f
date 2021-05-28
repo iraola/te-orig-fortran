@@ -130,20 +130,22 @@ C
       OPEN(UNIT=43,FILE='TE_const2.dat',STATUS='old')
 C  Write timestep zero for testing purposes
       CALL OUTPUT
+C  and write the zero timestamp for initialization
+      WRITE(32,111) 0
 C  Simulation Loop
 C
       DO 1000 I = 1, NPTS
 C
 C          CALL CONTRL
 C
-        TEST4=MOD(I,180)
-        IF (TEST4.EQ.0) THEN
-          CALL OUTPUT
-          WRITE(32,111) I
- 111  	  FORMAT(1X,I6)
-        ENDIF
+C        TEST4=MOD(I,180)
+C        IF (TEST4.EQ.0) THEN
+      CALL OUTPUT
+      WRITE(32,111) I
+ 111  FORMAT(1X,I6)
+C        ENDIF
 C
-        CALL INTGTR(NN,TIME,DELTAT,YY,YP)
+      CALL INTGTR(NN,TIME,DELTAT,YY,YP)
 C
  1000 CONTINUE
 C
