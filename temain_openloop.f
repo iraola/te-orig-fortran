@@ -110,24 +110,31 @@ C
           IDV(I) = 0
  100  CONTINUE
 C
-      OPEN(UNIT=32,FILE='TE_data_inc.dat',STATUS='old')
-      OPEN(UNIT=12,FILE='TE_data_mv1.dat',STATUS='old')
-      OPEN(UNIT=13,FILE='TE_data_mv2.dat',STATUS='old')
-      OPEN(UNIT=14,FILE='TE_data_mv3.dat',STATUS='old')
-      OPEN(UNIT=21,FILE='TE_data_me01.dat',STATUS='old')
-      OPEN(UNIT=22,FILE='TE_data_me02.dat',STATUS='old')
-      OPEN(UNIT=23,FILE='TE_data_me03.dat',STATUS='old')
-      OPEN(UNIT=24,FILE='TE_data_me04.dat',STATUS='old')
-      OPEN(UNIT=25,FILE='TE_data_me05.dat',STATUS='old')
-      OPEN(UNIT=26,FILE='TE_data_me06.dat',STATUS='old')
-      OPEN(UNIT=27,FILE='TE_data_me07.dat',STATUS='old')
-      OPEN(UNIT=28,FILE='TE_data_me08.dat',STATUS='old')
-      OPEN(UNIT=29,FILE='TE_data_me09.dat',STATUS='old')
-      OPEN(UNIT=30,FILE='TE_data_me10.dat',STATUS='old')
-      OPEN(UNIT=31,FILE='TE_data_me11.dat',STATUS='old')
-      OPEN(UNIT=41,FILE='TE_openloop_g.dat',STATUS='old')
-      OPEN(UNIT=42,FILE='TE_const1.dat',STATUS='old')
-      OPEN(UNIT=43,FILE='TE_const2.dat',STATUS='old')
+      OPEN(UNIT=32,FILE='TE_data_inc.dat',STATUS='new')
+      OPEN(UNIT=12,FILE='TE_data_mv1.dat',STATUS='new')
+      OPEN(UNIT=13,FILE='TE_data_mv2.dat',STATUS='new')
+      OPEN(UNIT=14,FILE='TE_data_mv3.dat',STATUS='new')
+      OPEN(UNIT=21,FILE='TE_data_me01.dat',STATUS='new')
+      OPEN(UNIT=22,FILE='TE_data_me02.dat',STATUS='new')
+      OPEN(UNIT=23,FILE='TE_data_me03.dat',STATUS='new')
+      OPEN(UNIT=24,FILE='TE_data_me04.dat',STATUS='new')
+      OPEN(UNIT=25,FILE='TE_data_me05.dat',STATUS='new')
+      OPEN(UNIT=26,FILE='TE_data_me06.dat',STATUS='new')
+      OPEN(UNIT=27,FILE='TE_data_me07.dat',STATUS='new')
+      OPEN(UNIT=28,FILE='TE_data_me08.dat',STATUS='new')
+      OPEN(UNIT=29,FILE='TE_data_me09.dat',STATUS='new')
+      OPEN(UNIT=30,FILE='TE_data_me10.dat',STATUS='new')
+      OPEN(UNIT=31,FILE='TE_data_me11.dat',STATUS='new')
+C
+      OPEN(UNIT=41,FILE='TE_openloop_g.dat',STATUS='new')
+      OPEN(UNIT=42,FILE='TE_const_avp.dat',STATUS='new')
+      OPEN(UNIT=43,FILE='TE_const_bvp.dat',STATUS='new')
+      OPEN(UNIT=44,FILE='TE_const_cvp.dat',STATUS='new')
+      OPEN(UNIT=45,FILE='TE_const_ah.dat',STATUS='new')
+      OPEN(UNIT=46,FILE='TE_const_ag.dat',STATUS='new')
+      OPEN(UNIT=47,FILE='TE_const_av.dat',STATUS='new')
+      OPEN(UNIT=48,FILE='TE_const_ad.dat',STATUS='new')
+      OPEN(UNIT=49,FILE='TE_const_xmw.dat',STATUS='new')
 C  Write timestep zero for testing purposes
       CALL OUTPUT
 C  and write the zero timestamp for initialization
@@ -135,8 +142,6 @@ C  and write the zero timestamp for initialization
 C  Simulation Loop
 C
       DO 1000 I = 1, NPTS
-C
-C          CALL CONTRL
 C
 C        TEST4=MOD(I,180)
 C        IF (TEST4.EQ.0) THEN
@@ -169,50 +174,16 @@ C
       CLOSE(UNIT=41)
       CLOSE(UNIT=42)
       CLOSE(UNIT=43)
+      CLOSE(UNIT=44)
+      CLOSE(UNIT=45)
+      CLOSE(UNIT=46)
+      CLOSE(UNIT=47)
+      CLOSE(UNIT=48)
+      CLOSE(UNIT=49)
       STOP
       END
 C
 C=============================================================================
-C
-      SUBROUTINE CONTRL
-C
-C  Discrete control algorithms
-C
-C
-C   MEASUREMENT AND VALVE COMMON BLOCK
-C
-      DOUBLE PRECISION XMEAS, XMV
-      COMMON/PV/ XMEAS(41), XMV(12)
-C
-C   CONTROLLER COMMON BLOCK
-C
-      DOUBLE PRECISION SETPT, GAIN, TAUI, ERROLD, DELTAT
-      COMMON/CTRL/ SETPT, GAIN, TAUI, ERROLD, DELTAT
-C
-      DOUBLE PRECISION ERR, DXMV
-C
-C  Example PI Controller:
-C    Stripper Level Controller
-C
-C    Calculate Error
-C
-      ERR = SETPT - XMEAS(15)
-C
-C    Proportional-Integral Controller (Velocity Form)
-C         GAIN = Controller Gain
-C         TAUI = Reset Time (min)
-C
-      DXMV = GAIN * ( ( ERR - ERROLD ) + ERR * DELTAT * 60. / TAUI )
-C
-      XMV(8) = XMV(8) - DXMV
-C
-      ERROLD = ERR
-C
-      RETURN
-      END
-C
-C=============================================================================
-C
       SUBROUTINE OUTPUT
 C
 C
@@ -253,11 +224,27 @@ C
     	WRITE(31,300) XMEAS(41)
 C
       WRITE(41,300) G
-      WRITE(42,100) AVP(1), AVP(2), AVP(3), AVP(4)
-      WRITE(43,100) AVP(5), AVP(6), AVP(7), AVP(8)
+      WRITE(42,400) AVP(1), AVP(2), AVP(3), AVP(4),
+     & AVP(5), AVP(6), AVP(7), AVP(8)
+      WRITE(43,400) BVP(1), BVP(2), BVP(3), BVP(4),
+     & BVP(5), BVP(6), BVP(7), BVP(8)
+      WRITE(44,400) CVP(1), CVP(2), CVP(3), CVP(4),
+     & CVP(5), CVP(6), CVP(7), CVP(8)
+      WRITE(45,400) AH(1), AH(2), AH(3), AH(4),
+     & AH(5), AH(6), AH(7), AH(8)
+      WRITE(46,400) AG(1), AG(2), AG(3), AG(4),
+     & AG(5), AG(6), AG(7), AG(8)
+      WRITE(47,400) AV(1), AV(2), AV(3), AV(4),
+     & AV(5), AV(6), AV(7), AV(8)
+      WRITE(48,400) AD(1), AD(2), AD(3), AD(4),
+     & AD(5), AD(6), AD(7), AD(8)
+      WRITE(49,400) XMW(1), XMW(2), XMW(3), XMW(4),
+     & XMW(5), XMW(6), XMW(7), XMW(8)
  100  FORMAT(1X,E13.8,2X,E13.8,2X,E13.8,2X,E13.8)
  200  FORMAT(1X,E13.8,2X,E13.8,2X,E13.8)
  300  FORMAT(1X,E13.8)
+ 400  FORMAT(1X,E13.8,2X,E13.8,2X,E13.8,2X,E13.8,
+     & 1X,E13.8,2X,E13.8,2X,E13.8,2X,E13.8)
 C
       RETURN
       END
