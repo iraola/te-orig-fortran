@@ -1,7 +1,8 @@
 # Personal Notes
 
-EXECUTION
-Open the terminal (cmd) and go to the address where the fortran files to be executed are located. To run 'g77' you may need to source the compiler in the windows PATH and, of course, to have installed the g77 compiler before.
+## EXECUTION
+
+Open the terminal (cmd) and go to the address where the fortran files are located. To run 'g77' you may need to source the compiler in the windows PATH and, of course, to have installed the g77 compiler before.
 
 Perform the command:
 ```bash
@@ -9,7 +10,7 @@ g77 temain_mod.f teprob.f
 ```
 or for the open-loop unstable simulation:
 ```bash
-g77 temain.f teprob.f (para el Open Loop)
+g77 temain.f teprob.f
 ```
 
 And execute the program compiled:
@@ -17,17 +18,18 @@ And execute the program compiled:
 a.exe
 ```
 
-If one tries to compile the temain_mod.f following these instructions, it will compile fine, but will give an error when starting the executable.
+If one tries to compile the temain_mod.f following these instructions, it will run ok, but it will throw an error when starting the executable.
 
 This is ONLY due to the UNITS used in input/output statements, which at least for the g77 compiler can't be greater than 100:
+
 - Line 347
-- One single one in line 406
+- Line 406
 - Line 418
 - Line 1346
 
-Also, the file names are written in the form `~/TE_data_inc.dat`. This is not very nice for g77 in the windows terminal, so delete all the `~/`.
+Also, the file names are written in the form `~/TE_data_inc.dat`. This is not very nice for g77 in windows cmd, so delete all the `~/`.
 
-Also, you may want to change the 'old' to 'new' so that the generated files are overwritten (it's best, you may have to delete the files each time, though).
+Furthermore, you may want to change the 'old' write permissions to 'new' so that the generated files are overwritten (you may have to delete the files each time, though).
 
 
 # Table of Contents
